@@ -21,6 +21,7 @@ class GPSVis(object):
         self.result_image = Image
         self.x_ticks = []
         self.y_ticks = []
+        self.img_points = img_points
 
     def plot_map(self, output='save', save_as='resultMap.png'):
         """
@@ -32,6 +33,7 @@ class GPSVis(object):
         self.get_ticks()
         fig, axis1 = plt.subplots(figsize=(10, 10))
         axis1.imshow(self.result_image)
+        axis1.scatter(self.img_points)
         axis1.set_xlabel('Longitude')
         axis1.set_ylabel('Latitude')
         axis1.set_xticklabels(self.x_ticks)
@@ -49,16 +51,16 @@ class GPSVis(object):
         :param width: Width of the drawn GPS records.
         :return:
         """
-        data = pd.read_csv(self.data_path, names=['LATITUDE', 'LONGITUDE'], sep=',')
+        data = pd.read_csv(self.data_path, names=['LATITUDE', 'LONGITUDE'], sep=',', skiprows = 1)
 
         self.result_image = Image.open(self.map_path, 'r')
         img_points = []
         gps_data = tuple(zip(data['LATITUDE'].values, data['LONGITUDE'].values))
         for d in gps_data:
             x1, y1 = self.scale_to_img(d, (self.result_image.size[0], self.result_image.size[1]))
-            img_points.append((x1, y1))
+            self.img_points.append((x1, y1))
         draw = ImageDraw.Draw(self.result_image)
-        draw.line(img_points, fill=color, width=width)
+        #draw.line(img_points, fill=color, width=width)
 
     def scale_to_img(self, lat_lon, h_w):
         """
