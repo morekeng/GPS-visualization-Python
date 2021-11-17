@@ -1,0 +1,2 @@
+Date,Time,Latitude,Hemisphere (N-S),Longitude,Hemisphere (E-W),Pitch,Roll,Heading,x_Acc,y_Acc,z_Acc,x_Gyro,y_Gyro,z_Gyro,Voltage
+16/11/21,13:29:14,5131.7476,N,3.5679,W,0.2064,0.1234,177.75,-0.4062,0.1665,0.9246,56.5796,92.4683,50.0488,7.8419

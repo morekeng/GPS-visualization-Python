@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 import statistics as stat
 from PIL import Image, ImageDraw
 
-Data_log = pd.read_csv('/Users/arthurguy/Documents/MOREK/Data_processing/16_nov_2021/GPS_14.CSV',usecols = ['Latitude','Hemisphere (N-S)','Longitude','Hemisphere (E-W)'])
+Data_log = pd.read_csv('/Users/arthurguy/Documents/MOREK/Data_processing/16_nov_2021/GPS_14.CSV',usecols = ['Latitude','Hemisphere (N-S)','Longitude','Hemisphere (E-W)','Heading'])
 
 Data_log.rename(columns={'Hemisphere (N-S)': 'HEM_NS','Hemisphere (E-W)':'HEM_EW'}, inplace=True)
 
@@ -21,9 +21,11 @@ def dm(x):
 def decimal_degrees(degrees, minutes):
     return degrees + minutes/60 
 
-Updated_coords = pd.DataFrame(columns=['Latitude','Longitude'])
+Updated_coords = pd.DataFrame(columns=['Latitude','Longitude','Heading'])
 
 for i in range(0,len(Data_log)):
+
+    Updated_coords.loc[i,['Heading']] = Data_log.Heading[i]
     
     if Data_log.HEM_NS[i] == 'N':
     
