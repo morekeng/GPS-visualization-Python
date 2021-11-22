@@ -1,11 +1,9 @@
 import pandas as pd
 import numpy as np
 import csv
-from matplotlib import pyplot as plt
 import statistics as stat
-from PIL import Image, ImageDraw
 
-Data_log = pd.read_csv('/Users/arthurguy/Documents/MOREK/Data_processing/16_nov_2021/GPS_14.CSV',usecols = ['Latitude','Hemisphere (N-S)','Longitude','Hemisphere (E-W)','Heading'])
+Data_log = pd.read_csv('17_nov_2021/GPS_17.CSV',usecols = ['Time','Latitude','Hemisphere (N-S)','Longitude','Hemisphere (E-W)','Heading'])
 
 Data_log.rename(columns={'Hemisphere (N-S)': 'HEM_NS','Hemisphere (E-W)':'HEM_EW'}, inplace=True)
 
@@ -21,11 +19,12 @@ def dm(x):
 def decimal_degrees(degrees, minutes):
     return degrees + minutes/60 
 
-Updated_coords = pd.DataFrame(columns=['Latitude','Longitude','Heading'])
+Updated_coords = pd.DataFrame(columns=['Time','Latitude','Longitude','Heading'])
 
 for i in range(0,len(Data_log)):
 
     Updated_coords.loc[i,['Heading']] = Data_log.Heading[i]
+    Updated_coords.loc[i,['Time']] = Data_log.Time[i]
     
     if Data_log.HEM_NS[i] == 'N':
     
@@ -45,5 +44,5 @@ for i in range(0,len(Data_log)):
         Updated_coords.loc[i,['Latitude']] = +decimal_degrees(*dm(Data_log.Latitude[i]))
 
 
-Updated_coords.to_csv('/Users/arthurguy/Documents/GitHub/GPS-visualization-Python/Updated_GPS_14.csv')
+Updated_coords.to_csv('Updated_GPS_17.csv')
 
